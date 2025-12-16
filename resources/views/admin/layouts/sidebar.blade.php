@@ -54,7 +54,7 @@
                 @endif
             </a>
 
-            <a href="#" class="nav-item">
+            <a href="{{ route('admin.settings.index') }}" class="nav-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                 <i data-feather="settings" class="nav-item-icon"></i>
                 Pengaturan
             </a>

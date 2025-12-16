@@ -36,7 +36,7 @@
                     <i data-feather="user" style="width: 18px; height: 18px;"></i>
                     Profil Saya
                 </a>
-                <a href="#" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--color-gray-700); text-decoration: none; transition: background 0.15s;">
+                <a href="{{ route('admin.settings.index') }}" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--color-gray-700); text-decoration: none; transition: background 0.15s;">
                     <i data-feather="settings" style="width: 18px; height: 18px;"></i>
                     Pengaturan
                 </a>
