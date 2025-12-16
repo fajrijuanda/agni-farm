@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductSpecification;
+use App\Models\Region;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -24,8 +25,9 @@ class ProductSeeder extends Seeder
             return;
         }
 
-        // Get categories
+        // Get categories and regions
         $categories = Category::all()->keyBy('slug');
+        $regions = Region::all();
 
         $products = [
             // Bibit Buah
@@ -241,13 +243,17 @@ class ProductSeeder extends Seeder
 
             unset($productData['category'], $productData['specs'], $productData['image']);
 
+            // Assign a random region
+            $region = $regions->random();
+
             $product = Product::updateOrCreate(
                 ['slug' => Str::slug($productData['name'])],
                 array_merge($productData, [
                     'slug' => Str::slug($productData['name']),
                     'category_id' => $category->id,
                     'user_id' => $admin->id,
-                    'shopee_link' => 'https://shopee.co.id/agnifarm',
+                    'region_id' => $region->id,
+                    'shopee_link' => $region->shopee_url,
                     'is_active' => true,
                     'sort_order' => 0,
                 ])

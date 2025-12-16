@@ -73,7 +73,16 @@ class HomeController extends Controller
     {
         PageView::record('catalog');
 
-        $query = Product::with(['category', 'images'])->active();
+        // Get user's selected region
+        $selectedRegionSlug = session('selected_region', 'karawang');
+        $selectedRegion = \App\Models\Region::where('slug', $selectedRegionSlug)->first();
+
+        $query = Product::with(['category', 'images', 'region'])->active();
+
+        // Filter by selected region
+        if ($selectedRegion) {
+            $query->where('region_id', $selectedRegion->id);
+        }
 
         // Filter by category
         if ($request->filled('category')) {
@@ -103,8 +112,9 @@ class HomeController extends Controller
 
         $products = $query->paginate(12)->withQueryString();
         $categories = Category::active()->ordered()->get();
+        $regions = \App\Models\Region::orderBy('order_index')->get();
 
-        return view('catalog.index', compact('products', 'categories'));
+        return view('catalog.index', compact('products', 'categories', 'regions', 'selectedRegion'));
     }
 
     /**
@@ -173,11 +183,11 @@ class HomeController extends Controller
      */
     public function setRegion(Request $request)
     {
-        $region = $request->input('region');
-        $regions = config('regions.regions');
+        $regionSlug = $request->input('region');
+        $region = \App\Models\Region::where('slug', $regionSlug)->first();
 
-        if (array_key_exists($region, $regions)) {
-            session(['selected_region' => $region]);
+        if ($region) {
+            session(['selected_region' => $region->slug]);
         }
 
         return back();

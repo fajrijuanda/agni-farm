@@ -86,30 +86,30 @@
 
             <div class="header-actions">
                 @php
-                    $selectedRegion = session('selected_region', config('regions.default'));
-                    $regions = config('regions.regions');
-                    $currentRegion = $regions[$selectedRegion] ?? $regions['karawang'];
+                    $selectedRegionSlug = session('selected_region', 'karawang');
+                    $regions = \App\Models\Region::orderBy('order_index')->get();
+                    $currentRegion = $regions->firstWhere('slug', $selectedRegionSlug) ?? $regions->first();
                 @endphp
 
                 <!-- Region Selector -->
                 <div class="region-selector" style="position: relative;">
                     <button type="button" class="btn btn-light btn-sm region-toggle" id="regionToggle" style="padding: 8px 16px; font-size: 14px; display: flex; align-items: center; gap: 6px; background: var(--color-gray-100); border: 1px solid var(--color-gray-200); border-radius: 8px; height: 38px;">
                         <i data-feather="map-pin" style="width: 16px; height: 16px; color: var(--color-primary-600);"></i>
-                        <span>{{ $currentRegion['name'] }}</span>
+                        <span>{{ $currentRegion->name ?? 'Pilih Region' }}</span>
                         <i data-feather="chevron-down" style="width: 14px; height: 14px;"></i>
                     </button>
                     <div class="region-dropdown" id="regionDropdown" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 8px; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); min-width: 200px; z-index: 1000; overflow: hidden;">
                         <div style="padding: 12px 16px; background: var(--color-gray-50); border-bottom: 1px solid var(--color-gray-100);">
                             <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--color-gray-600); text-transform: uppercase; letter-spacing: 0.05em;">Pilih Lokasi Anda</p>
                         </div>
-                        @foreach($regions as $key => $region)
+                        @foreach($regions as $region)
                         <form action="{{ route('set.region') }}" method="POST" style="margin: 0;">
                             @csrf
-                            <input type="hidden" name="region" value="{{ $key }}">
-                            <button type="submit" class="region-option" style="width: 100%; padding: 12px 16px; border: none; background: {{ $selectedRegion === $key ? 'var(--color-primary-50)' : 'white' }}; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;">
-                                <span style="font-size: 18px;">{{ $region['icon'] }}</span>
-                                <span style="font-weight: {{ $selectedRegion === $key ? '600' : '500' }}; color: {{ $selectedRegion === $key ? 'var(--color-primary-700)' : 'var(--color-gray-700)' }};">{{ $region['name'] }}</span>
-                                @if($selectedRegion === $key)
+                            <input type="hidden" name="region" value="{{ $region->slug }}">
+                            <button type="submit" class="region-option" style="width: 100%; padding: 12px 16px; border: none; background: {{ $selectedRegionSlug === $region->slug ? 'var(--color-primary-50)' : 'white' }}; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;">
+                                <span style="font-size: 18px;">📍</span>
+                                <span style="font-weight: {{ $selectedRegionSlug === $region->slug ? '600' : '500' }}; color: {{ $selectedRegionSlug === $region->slug ? 'var(--color-primary-700)' : 'var(--color-gray-700)' }};">{{ $region->name }}</span>
+                                @if($selectedRegionSlug === $region->slug)
                                 <i data-feather="check" style="width: 16px; height: 16px; color: var(--color-primary-600); margin-left: auto;"></i>
                                 @endif
                             </button>
@@ -118,7 +118,7 @@
                     </div>
                 </div>
 
-                <a href="{{ $currentRegion['shopee_link'] }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="padding: 8px 16px; font-size: 14px; height: 38px; display: flex; align-items: center; gap: 6px;">
+                <a href="{{ $currentRegion->shopee_url ?? '#' }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="padding: 8px 16px; font-size: 14px; height: 38px; display: flex; align-items: center; gap: 6px;">
                     <i data-feather="shopping-bag" style="width: 16px; height: 16px;"></i>
                     Shopee
                 </a>

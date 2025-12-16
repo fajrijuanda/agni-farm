@@ -19,7 +19,13 @@ class CatalogController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Product::with(['category', 'images']);
+        $user = auth()->user();
+        $query = Product::with(['category', 'images', 'region']);
+
+        // Region filtering for non-superadmin
+        if ($user->role !== 'superadmin' && $user->region_id) {
+            $query->where('region_id', $user->region_id);
+        }
 
         // Search
         if ($request->filled('search')) {
@@ -41,6 +47,11 @@ class CatalogController extends Controller
             $query->where('is_featured', $request->featured === 'yes');
         }
 
+        // Filter by region (for superadmin only)
+        if ($user->role === 'superadmin' && $request->filled('region')) {
+            $query->where('region_id', $request->region);
+        }
+
         $perPage = $request->input('per_page', 10);
         if ($perPage === 'all') {
             $perPage = $query->count();
@@ -53,8 +64,9 @@ class CatalogController extends Controller
             ->withQueryString();
 
         $categories = Category::active()->ordered()->get();
+        $regions = \App\Models\Region::orderBy('order_index')->get();
 
-        return view('admin.catalog.index', compact('products', 'categories'));
+        return view('admin.catalog.index', compact('products', 'categories', 'regions'));
     }
 
     /**
@@ -119,10 +131,16 @@ class CatalogController extends Controller
         DB::beginTransaction();
 
         try {
+            $user = auth()->user();
+
+            // Determine region_id: Use admin's region, or for superadmin, could add UI selection later
+            $regionId = $user->region_id;
+
             // Create product
             $product = Product::create([
                 'user_id' => auth()->id(),
                 'category_id' => $validated['category_id'],
+                'region_id' => $regionId,
                 'name' => $validated['name'],
                 'slug' => Str::slug($validated['name']),
                 'price' => $validated['price'],

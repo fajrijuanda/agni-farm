@@ -15,6 +15,7 @@ class Product extends Model
     protected $fillable = [
         'user_id',
         'category_id',
+        'region_id',
         'name',
         'slug',
         'short_description',
@@ -57,6 +58,14 @@ class Product extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the region of this product
+     */
+    public function region(): BelongsTo
+    {
+        return $this->belongsTo(Region::class);
     }
 
     /**

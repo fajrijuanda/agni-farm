@@ -24,6 +24,8 @@ class User extends Authenticatable
         'password',
         'avatar',
         'is_admin',
+        'role',
+        'region_id',
     ];
 
     /**
@@ -75,6 +77,30 @@ class User extends Authenticatable
             return asset('storage/' . $this->avatar);
         }
         return 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=166534&color=fff';
+    }
+
+    /**
+     * Get the region this user manages
+     */
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
+    }
+
+    /**
+     * Check if user is superadmin
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === 'superadmin';
+    }
+
+    /**
+     * Check if user is regional admin
+     */
+    public function isRegionalAdmin(): bool
+    {
+        return $this->role === 'admin' && $this->region_id !== null;
     }
 }
 
