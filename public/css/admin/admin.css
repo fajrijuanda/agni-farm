@@ -1298,6 +1298,11 @@ body {
     color: var(--color-gray-400);
 }
 
+.pagination nav svg {
+    width: 20px;
+    height: 20px;
+}
+
 @media (max-width: 640px) {
     .admin-content {
         padding: var(--spacing-4);
