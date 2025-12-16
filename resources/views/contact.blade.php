@@ -149,18 +149,3 @@
     </div>
 </section>
 @endsection
-
-@push('styles')
-<style>
-    @@media (max-width: 1024px) {
-        [style*="grid-template-columns: 1fr 1fr"] {
-            grid-template-columns: 1fr !important;
-        }
-    }
-
-    .form-input.error,
-    .form-textarea.error {
-        border-color: #ef4444;
-    }
-</style>
-@endpush

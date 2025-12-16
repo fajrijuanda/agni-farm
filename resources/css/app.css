@@ -831,6 +831,16 @@ button {
     border: 1px solid #fecaca;
 }
 
+.form-input.error,
+.form-textarea.error {
+    border-color: #ef4444;
+}
+
+/* Inline grid responsive for two-column layouts */
+[style*="grid-template-columns: 1fr 1fr"] {
+    transition: grid-template-columns 0.3s ease;
+}
+
 /* ========================================
    RESPONSIVE
 ======================================== */
@@ -850,6 +860,11 @@ button {
 
     .hero-buttons {
         justify-content: center;
+    }
+
+    /* Inline two-column grids become single column */
+    [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
     }
 }
 

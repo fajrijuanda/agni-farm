@@ -145,13 +145,3 @@
     </div>
 </section>
 @endsection
-
-@push('styles')
-<style>
-    @@media (max-width: 1024px) {
-        [style*="grid-template-columns: 1fr 1fr"] {
-            grid-template-columns: 1fr !important;
-        }
-    }
-</style>
-@endpush
