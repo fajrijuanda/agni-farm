@@ -68,9 +68,62 @@
     </div>
 </section>
 
+<!-- Latest Articles Section (Moved before Products) -->
+@if(isset($latestArticles) && $latestArticles->count() > 0)
+<section class="section-lg">
+    <div class="container">
+        <div class="section-header animate-on-scroll">
+            <span class="section-badge">Blog & Artikel</span>
+            <h2 class="section-title">Kabar Terbaru</h2>
+            <p class="section-description">
+                Tips berkebun dan informasi menarik lainnya
+            </p>
+        </div>
+
+        <div class="articles-grid animate-stagger">
+            @foreach($latestArticles as $article)
+            <article class="article-card">
+                <a href="{{ route('articles.show', $article) }}" class="article-card-image">
+                    <img src="{{ $article->image_url }}" alt="{{ $article->title }}">
+                    <div class="article-card-overlay">
+                        <span class="article-read-more">Baca Artikel</span>
+                    </div>
+                </a>
+                <div class="article-card-body">
+                    <div class="article-meta">
+                        <span class="article-date">
+                            <i data-feather="calendar" style="width: 14px; height: 14px;"></i>
+                            {{ $article->published_at ? $article->published_at->format('d M Y') : $article->created_at->format('d M Y') }}
+                        </span>
+                    </div>
+                    <h3 class="article-card-title">
+                        <a href="{{ route('articles.show', $article) }}">{{ Str::limit($article->title, 60) }}</a>
+                    </h3>
+                    <p class="article-card-excerpt">
+                        {{ Str::limit($article->excerpt ?? strip_tags($article->content), 100) }}
+                    </p>
+                    <a href="{{ route('articles.show', $article) }}" class="article-link">
+                        Baca Selengkapnya
+                        <i data-feather="arrow-right" style="width: 16px; height: 16px;"></i>
+                    </a>
+                </div>
+            </article>
+            @endforeach
+        </div>
+
+        <div style="text-align: center; margin-top: var(--spacing-10);">
+            <a href="{{ route('articles.index') }}" class="btn btn-outline-primary btn-lg">
+                Lihat Semua Artikel
+                <i data-feather="arrow-right" style="width: 20px; height: 20px;"></i>
+            </a>
+        </div>
+    </div>
+</section>
+@endif
+
 <!-- Featured Products Section -->
 @if($featuredProducts->count() > 0)
-<section class="section-lg">
+<section class="section-lg" style="background: var(--color-gray-50);">
     <div class="container">
         <div class="section-header animate-on-scroll">
             <span class="section-badge">Produk Unggulan</span>
@@ -213,55 +266,6 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-    </div>
-</section>
-@endif
-
-<!-- Latest Articles Section -->
-@if(isset($latestArticles) && $latestArticles->count() > 0)
-<section class="section-lg" style="background: var(--color-gray-50);">
-    <div class="container">
-        <div class="section-header animate-on-scroll">
-            <span class="section-badge">Blog & Artikel</span>
-            <h2 class="section-title">Kabar Terbaru</h2>
-            <p class="section-description">
-                Tips berkebun dan informasi menarik lainnya.
-            </p>
-        </div>
-
-        <div class="row animate-stagger">
-            @foreach($latestArticles as $article)
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 shadow-sm border-0 border-radius-xl overflow-hidden" style="transition: transform 0.3s ease; border-radius: 1rem;">
-                    <a href="{{ route('articles.show', $article) }}" class="d-block">
-                        <img src="{{ $article->image_url }}" class="card-img-top" alt="{{ $article->title }}" style="height: 200px; object-fit: cover; width: 100%;">
-                    </a>
-                    <div class="card-body p-4" style="background: white;">
-                        <p class="text-uppercase text-primary font-weight-bold mb-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">
-                            {{ $article->published_at ? $article->published_at->format('d M Y') : $article->created_at->format('d M Y') }}
-                        </p>
-                        <h5 class="font-weight-bold mb-2">
-                            <a href="{{ route('articles.show', $article) }}" class="text-dark text-decoration-none">
-                                {{ Str::limit($article->title, 50) }}
-                            </a>
-                        </h5>
-                        <p class="text-secondary mb-4" style="font-size: 0.875rem; line-height: 1.6;">
-                            {{ Str::limit($article->excerpt ?? strip_tags($article->content), 80) }}
-                        </p>
-                        <a href="{{ route('articles.show', $article) }}" class="font-weight-bold text-primary" style="font-size: 0.875rem; text-decoration: none;">
-                            Baca Selengkapnya <i data-feather="arrow-right" style="width: 14px; height: 14px; vertical-align: middle;"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-
-        <div class="text-center mt-5">
-            <a href="{{ route('articles.index') }}" class="btn btn-outline-primary">
-                Lihat Semua Artikel
-            </a>
         </div>
     </div>
 </section>

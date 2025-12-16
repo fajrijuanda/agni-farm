@@ -79,6 +79,7 @@
             <nav class="header-nav" role="navigation" aria-label="Main navigation">
                 <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
                 <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'active' : '' }}">Tentang Kami</a>
+                <a href="{{ route('articles.index') }}" class="nav-link {{ request()->routeIs('articles*') ? 'active' : '' }}">Artikel</a>
                 <a href="{{ route('catalog') }}" class="nav-link {{ request()->routeIs('catalog*') ? 'active' : '' }}">Catalog</a>
                 <a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Kontak</a>
             </nav>
@@ -98,6 +99,7 @@
     <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
         <a href="{{ route('home') }}" class="mobile-nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
         <a href="{{ route('about') }}" class="mobile-nav-link {{ request()->routeIs('about') ? 'active' : '' }}">Tentang Kami</a>
+        <a href="{{ route('articles.index') }}" class="mobile-nav-link {{ request()->routeIs('articles*') ? 'active' : '' }}">Artikel</a>
         <a href="{{ route('catalog') }}" class="mobile-nav-link {{ request()->routeIs('catalog*') ? 'active' : '' }}">Catalog</a>
         <a href="{{ route('contact') }}" class="mobile-nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Kontak</a>
         <a href="https://shopee.co.id/agnifarm" target="_blank" rel="noopener" class="btn btn-shopee" style="margin-top: 20px; width: 100%;">

@@ -17,6 +17,7 @@ class Article extends Model
         'excerpt',
         'content',
         'image',
+        'youtube_url',
         'is_published',
         'published_at',
         'user_id',
@@ -66,5 +67,30 @@ class Article extends Model
     public function scopePublished($query)
     {
         return $query->where('is_published', true);
+    }
+
+    /**
+     * Get YouTube embed URL from video URL
+     */
+    public function getYoutubeEmbedUrlAttribute(): ?string
+    {
+        if (!$this->youtube_url) {
+            return null;
+        }
+
+        // Extract video ID from various YouTube URL formats
+        $patterns = [
+            '/youtube\.com\/watch\?v=([^\&\?\/]+)/',
+            '/youtube\.com\/embed\/([^\&\?\/]+)/',
+            '/youtu\.be\/([^\&\?\/]+)/',
+        ];
+
+        foreach ($patterns as $pattern) {
+            if (preg_match($pattern, $this->youtube_url, $matches)) {
+                return 'https://www.youtube.com/embed/' . $matches[1];
+            }
+        }
+
+        return null;
     }
 }

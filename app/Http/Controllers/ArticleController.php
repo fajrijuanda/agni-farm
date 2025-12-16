@@ -18,6 +18,14 @@ class ArticleController extends Controller
         if (!$article->is_published) {
             abort(404);
         }
-        return view('articles.show', compact('article'));
+
+        // Get recent articles for sidebar (exclude current article)
+        $recentArticles = Article::published()
+            ->where('id', '!=', $article->id)
+            ->latest()
+            ->take(5)
+            ->get();
+
+        return view('articles.show', compact('article', 'recentArticles'));
     }
 }

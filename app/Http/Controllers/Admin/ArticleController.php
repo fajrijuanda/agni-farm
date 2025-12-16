@@ -38,6 +38,7 @@ class ArticleController extends Controller
             'content' => 'required|string',
             'excerpt' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'youtube_url' => 'nullable|url',
             'is_published' => 'boolean',
         ]);
 
@@ -85,6 +86,7 @@ class ArticleController extends Controller
             'content' => 'required|string',
             'excerpt' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'youtube_url' => 'nullable|url',
             'is_published' => 'boolean',
         ]);
 
