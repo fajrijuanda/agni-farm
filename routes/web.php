@@ -26,6 +26,7 @@ Route::get('/kontak', [HomeController::class, 'contact'])->name('contact');
 Route::post('/kontak', [HomeController::class, 'contactSubmit'])->name('contact.submit');
 Route::get('/artikel', [App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
 Route::get('/artikel/{article:slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
+Route::post('/set-region', [HomeController::class, 'setRegion'])->name('set.region');
 
 /*
 |--------------------------------------------------------------------------

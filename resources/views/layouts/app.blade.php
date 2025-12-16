@@ -85,7 +85,40 @@
             </nav>
 
             <div class="header-actions">
-                <a href="https://shopee.co.id/agnifarm" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="padding: 8px 16px; font-size: 14px;">
+                @php
+                    $selectedRegion = session('selected_region', config('regions.default'));
+                    $regions = config('regions.regions');
+                    $currentRegion = $regions[$selectedRegion] ?? $regions['karawang'];
+                @endphp
+
+                <!-- Region Selector -->
+                <div class="region-selector" style="position: relative;">
+                    <button type="button" class="btn btn-light btn-sm region-toggle" id="regionToggle" style="padding: 6px 12px; font-size: 13px; display: flex; align-items: center; gap: 6px; background: var(--color-gray-100); border: 1px solid var(--color-gray-200);">
+                        <i data-feather="map-pin" style="width: 14px; height: 14px; color: var(--color-primary-600);"></i>
+                        <span>{{ $currentRegion['name'] }}</span>
+                        <i data-feather="chevron-down" style="width: 14px; height: 14px;"></i>
+                    </button>
+                    <div class="region-dropdown" id="regionDropdown" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 8px; background: white; border-radius: 12px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); min-width: 200px; z-index: 1000; overflow: hidden;">
+                        <div style="padding: 12px 16px; background: var(--color-gray-50); border-bottom: 1px solid var(--color-gray-100);">
+                            <p style="margin: 0; font-size: 12px; font-weight: 600; color: var(--color-gray-600); text-transform: uppercase; letter-spacing: 0.05em;">Pilih Lokasi Anda</p>
+                        </div>
+                        @foreach($regions as $key => $region)
+                        <form action="{{ route('set.region') }}" method="POST" style="margin: 0;">
+                            @csrf
+                            <input type="hidden" name="region" value="{{ $key }}">
+                            <button type="submit" class="region-option" style="width: 100%; padding: 12px 16px; border: none; background: {{ $selectedRegion === $key ? 'var(--color-primary-50)' : 'white' }}; text-align: left; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: background 0.2s;">
+                                <span style="font-size: 18px;">{{ $region['icon'] }}</span>
+                                <span style="font-weight: {{ $selectedRegion === $key ? '600' : '500' }}; color: {{ $selectedRegion === $key ? 'var(--color-primary-700)' : 'var(--color-gray-700)' }};">{{ $region['name'] }}</span>
+                                @if($selectedRegion === $key)
+                                <i data-feather="check" style="width: 16px; height: 16px; color: var(--color-primary-600); margin-left: auto;"></i>
+                                @endif
+                            </button>
+                        </form>
+                        @endforeach
+                    </div>
+                </div>
+
+                <a href="{{ $currentRegion['shopee_link'] }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="padding: 8px 16px; font-size: 14px;">
                     <i data-feather="shopping-bag" style="width: 16px; height: 16px;"></i>
                     Shopee
                 </a>
@@ -102,9 +135,26 @@
         <a href="{{ route('articles.index') }}" class="mobile-nav-link {{ request()->routeIs('articles*') ? 'active' : '' }}">Artikel</a>
         <a href="{{ route('catalog') }}" class="mobile-nav-link {{ request()->routeIs('catalog*') ? 'active' : '' }}">Catalog</a>
         <a href="{{ route('contact') }}" class="mobile-nav-link {{ request()->routeIs('contact') ? 'active' : '' }}">Kontak</a>
-        <a href="https://shopee.co.id/agnifarm" target="_blank" rel="noopener" class="btn btn-shopee" style="margin-top: 20px; width: 100%;">
+
+        <!-- Mobile Region Selector -->
+        <div style="margin-top: 20px; padding: 16px; background: var(--color-gray-50); border-radius: 12px;">
+            <p style="font-size: 12px; font-weight: 600; color: var(--color-gray-600); margin-bottom: 8px; text-transform: uppercase;">Lokasi Anda</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                @foreach($regions as $key => $region)
+                <form action="{{ route('set.region') }}" method="POST" style="margin: 0;">
+                    @csrf
+                    <input type="hidden" name="region" value="{{ $key }}">
+                    <button type="submit" style="padding: 8px 12px; border: 1px solid {{ $selectedRegion === $key ? 'var(--color-primary-500)' : 'var(--color-gray-200)' }}; background: {{ $selectedRegion === $key ? 'var(--color-primary-50)' : 'white' }}; color: {{ $selectedRegion === $key ? 'var(--color-primary-700)' : 'var(--color-gray-600)' }}; font-weight: 500; font-size: 13px; border-radius: 8px; cursor: pointer;">
+                        {{ $region['icon'] }} {{ $region['name'] }}
+                    </button>
+                </form>
+                @endforeach
+            </div>
+        </div>
+
+        <a href="{{ $currentRegion['shopee_link'] }}" target="_blank" rel="noopener" class="btn btn-shopee" style="margin-top: 16px; width: 100%;">
             <i data-feather="shopping-bag"></i>
-            Kunjungi Shopee
+            Kunjungi Shopee {{ $currentRegion['name'] }}
         </a>
     </div>
 
@@ -225,6 +275,21 @@
             scrollToTopBtn.addEventListener('click', function() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
+
+            // Region dropdown toggle
+            const regionToggle = document.getElementById('regionToggle');
+            const regionDropdown = document.getElementById('regionDropdown');
+            if (regionToggle && regionDropdown) {
+                regionToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    regionDropdown.style.display = regionDropdown.style.display === 'none' ? 'block' : 'none';
+                });
+                document.addEventListener('click', function(e) {
+                    if (!regionToggle.contains(e.target) && !regionDropdown.contains(e.target)) {
+                        regionDropdown.style.display = 'none';
+                    }
+                });
+            }
 
             const animateElements = document.querySelectorAll('.animate-on-scroll, .animate-stagger');
             const observer = new IntersectionObserver((entries) => {

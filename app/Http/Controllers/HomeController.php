@@ -167,4 +167,19 @@ class HomeController extends Controller
 
         return back()->with('success', 'Terima kasih! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.');
     }
+
+    /**
+     * Set user's selected region
+     */
+    public function setRegion(Request $request)
+    {
+        $region = $request->input('region');
+        $regions = config('regions.regions');
+
+        if (array_key_exists($region, $regions)) {
+            session(['selected_region' => $region]);
+        }
+
+        return back();
+    }
 }
