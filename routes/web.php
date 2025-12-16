@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CatalogController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,9 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Public Routes
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/tentang-kami', [HomeController::class, 'about'])->name('about');
+Route::get('/catalog', [HomeController::class, 'catalog'])->name('catalog');
+Route::get('/catalog/{product:slug}', [HomeController::class, 'productShow'])->name('catalog.show');
+Route::get('/kontak', [HomeController::class, 'contact'])->name('contact');
+Route::post('/kontak', [HomeController::class, 'contactSubmit'])->name('contact.submit');
 
 /*
 |--------------------------------------------------------------------------
