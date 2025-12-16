@@ -17,9 +17,14 @@ class AdminSeeder extends Seeder
             ['email' => 'admin@agnifarm.com'],
             [
                 'name' => 'Admin Agni Farm',
-                'password' => Hash::make('password'),
+                'email' => 'admin@agnifarm.com',
+                'password' => Hash::make('agnifarm123'),
                 'is_admin' => true,
             ]
         );
+
+        $this->command->info('Admin user created successfully!');
+        $this->command->info('Email: admin@agnifarm.com');
+        $this->command->info('Password: agnifarm123');
     }
 }
