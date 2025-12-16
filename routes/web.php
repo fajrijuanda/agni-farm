@@ -66,7 +66,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     // Catalog (Products)
     Route::post('catalog/bulk-delete', [CatalogController::class, 'bulkDelete'])->name('catalog.bulk-delete');
-    Route::resource('catalog', CatalogController::class);
+    Route::resource('catalog', CatalogController::class)->parameters(['catalog' => 'product']);
     Route::post('catalog/{product}/toggle-status', [CatalogController::class, 'toggleStatus'])->name('catalog.toggle-status');
     Route::post('catalog/{product}/toggle-featured', [CatalogController::class, 'toggleFeatured'])->name('catalog.toggle-featured');
     Route::post('catalog/{product}/duplicate', [CatalogController::class, 'duplicate'])->name('catalog.duplicate');

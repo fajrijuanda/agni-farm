@@ -3,15 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- SEO Meta Tags -->
     <meta name="description" content="@yield('meta_description', 'Agni Farm - Supplier bibit tanaman berkualitas dari Jawa Barat. Belanja mudah via Shopee dengan harga terjangkau.')">
     <meta name="keywords" content="@yield('meta_keywords', 'bibit tanaman, agni farm, tanaman hias, bibit sayuran, bibit buah, pertanian, shopee, jawa barat')">
     <meta name="author" content="Agni Farm">
     <meta name="robots" content="index, follow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:title" content="@yield('title', 'Agni Farm') - Bibit Tanaman Berkualitas">
@@ -20,40 +17,31 @@
     <meta property="og:locale" content="id_ID">
     <meta property="og:site_name" content="Agni Farm">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@yield('title', 'Agni Farm') - Bibit Tanaman Berkualitas">
     <meta name="twitter:description" content="@yield('meta_description', 'Agni Farm - Supplier bibit tanaman berkualitas dari Jawa Barat.')">
     <meta name="twitter:image" content="{{ asset('images/og-image.jpg') }}">
 
-    <!-- Canonical URL -->
     <link rel="canonical" href="{{ url()->current() }}">
 
     <title>@yield('title', 'Agni Farm') - Bibit Tanaman Berkualitas</title>
 
-    <!-- Favicon -->
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favicon-16x16.png') }}">
     <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon.png') }}">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
     <meta name="theme-color" content="#166534">
 
-    <!-- Preconnect for performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://unpkg.com">
 
-    <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Feather Icons -->
     <script src="https://unpkg.com/feather-icons" defer></script>
 
-    <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
 
-    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -81,7 +69,6 @@
     @stack('styles')
 </head>
 <body class="page-transition">
-    <!-- Header -->
     <header class="header" id="header">
         <div class="container header-container">
             <a href="{{ route('home') }}" class="header-logo">
@@ -108,7 +95,6 @@
         </div>
     </header>
 
-    <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
         <a href="{{ route('home') }}" class="mobile-nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a>
         <a href="{{ route('about') }}" class="mobile-nav-link {{ request()->routeIs('about') ? 'active' : '' }}">Tentang Kami</a>
@@ -120,17 +106,14 @@
         </a>
     </div>
 
-    <!-- Main Content -->
     <main role="main">
         @yield('content')
     </main>
 
-    <!-- Scroll to Top Button -->
     <button class="scroll-to-top" id="scrollToTop" aria-label="Scroll to top">
         <i data-feather="arrow-up" style="width: 20px; height: 20px;"></i>
     </button>
 
-    <!-- Footer -->
     <footer class="footer" role="contentinfo">
         <div class="container">
             <div class="footer-grid">
@@ -199,15 +182,12 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize Feather Icons
             if (typeof feather !== 'undefined') {
                 feather.replace();
             }
 
-            // Header scroll effect
             const header = document.getElementById('header');
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 50) {
@@ -217,7 +197,6 @@
                 }
             });
 
-            // Mobile menu toggle
             const mobileMenuToggle = document.getElementById('mobileMenuToggle');
             const mobileMenu = document.getElementById('mobileMenu');
             let menuOpen = false;
@@ -232,7 +211,6 @@
                 feather.replace();
             });
 
-            // Scroll to top button
             const scrollToTopBtn = document.getElementById('scrollToTop');
             window.addEventListener('scroll', function() {
                 if (window.scrollY > 500) {
@@ -246,7 +224,6 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
 
-            // Scroll animations
             const animateElements = document.querySelectorAll('.animate-on-scroll, .animate-stagger');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
