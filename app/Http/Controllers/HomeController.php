@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Article; // Import Article
 use App\Models\Contact;
 use App\Models\PageView;
 use App\Models\User; // Import User
@@ -45,10 +46,14 @@ class HomeController extends Controller
             ->take(4)
             ->get();
 
+        // Get latest articles
+        $latestArticles = Article::published()->latest()->take(3)->get();
+
         return view('home', compact(
             'featuredProducts',
             'categories',
-            'latestProducts'
+            'latestProducts',
+            'latestArticles'
         ));
     }
 

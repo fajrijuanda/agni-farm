@@ -24,6 +24,8 @@ Route::get('/catalog', [HomeController::class, 'catalog'])->name('catalog');
 Route::get('/catalog/{product:slug}', [HomeController::class, 'productShow'])->name('catalog.show');
 Route::get('/kontak', [HomeController::class, 'contact'])->name('contact');
 Route::post('/kontak', [HomeController::class, 'contactSubmit'])->name('contact.submit');
+Route::get('/artikel', [App\Http\Controllers\ArticleController::class, 'index'])->name('articles.index');
+Route::get('/artikel/{article:slug}', [App\Http\Controllers\ArticleController::class, 'show'])->name('articles.show');
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +60,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     // Settings (New)
     Route::get('settings', [SettingController::class, 'index'])->name('settings.index');
     Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+
+    // Articles
+    Route::resource('articles', \App\Http\Controllers\Admin\ArticleController::class);
 
     // Categories
     Route::resource('categories', CategoryController::class);

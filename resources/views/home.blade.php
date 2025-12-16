@@ -218,6 +218,55 @@
 </section>
 @endif
 
+<!-- Latest Articles Section -->
+@if(isset($latestArticles) && $latestArticles->count() > 0)
+<section class="section-lg" style="background: var(--color-gray-50);">
+    <div class="container">
+        <div class="section-header animate-on-scroll">
+            <span class="section-badge">Blog & Artikel</span>
+            <h2 class="section-title">Kabar Terbaru</h2>
+            <p class="section-description">
+                Tips berkebun dan informasi menarik lainnya.
+            </p>
+        </div>
+
+        <div class="row animate-stagger">
+            @foreach($latestArticles as $article)
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm border-0 border-radius-xl overflow-hidden" style="transition: transform 0.3s ease; border-radius: 1rem;">
+                    <a href="{{ route('articles.show', $article) }}" class="d-block">
+                        <img src="{{ $article->image_url }}" class="card-img-top" alt="{{ $article->title }}" style="height: 200px; object-fit: cover; width: 100%;">
+                    </a>
+                    <div class="card-body p-4" style="background: white;">
+                        <p class="text-uppercase text-primary font-weight-bold mb-2" style="font-size: 0.75rem; letter-spacing: 0.05em;">
+                            {{ $article->published_at ? $article->published_at->format('d M Y') : $article->created_at->format('d M Y') }}
+                        </p>
+                        <h5 class="font-weight-bold mb-2">
+                            <a href="{{ route('articles.show', $article) }}" class="text-dark text-decoration-none">
+                                {{ Str::limit($article->title, 50) }}
+                            </a>
+                        </h5>
+                        <p class="text-secondary mb-4" style="font-size: 0.875rem; line-height: 1.6;">
+                            {{ Str::limit($article->excerpt ?? strip_tags($article->content), 80) }}
+                        </p>
+                        <a href="{{ route('articles.show', $article) }}" class="font-weight-bold text-primary" style="font-size: 0.875rem; text-decoration: none;">
+                            Baca Selengkapnya <i data-feather="arrow-right" style="width: 14px; height: 14px; vertical-align: middle;"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{{ route('articles.index') }}" class="btn btn-outline-primary">
+                Lihat Semua Artikel
+            </a>
+        </div>
+    </div>
+</section>
+@endif
+
 <!-- CTA Section -->
 <section class="cta-section">
     <div class="container">

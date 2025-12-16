@@ -18,6 +18,11 @@
                 <i data-feather="grid" class="nav-item-icon"></i>
                 Dashboard
             </a>
+
+            <a href="{{ route('admin.articles.index') }}" class="nav-item {{ request()->routeIs('admin.articles.*') ? 'active' : '' }}">
+                <i data-feather="file-text" class="nav-item-icon"></i>
+                Artikel
+            </a>
         </div>
 
         <div class="nav-section">
