@@ -500,6 +500,7 @@ body {
     cursor: pointer;
     transition: all var(--transition-fast);
     text-decoration: none;
+    min-height: 42px; /* Match input/select height */
 }
 
 .btn:disabled {
@@ -510,6 +511,7 @@ body {
 .btn-sm {
     padding: var(--spacing-1) var(--spacing-3);
     font-size: var(--font-size-xs);
+    min-height: 32px;
 }
 
 .btn-lg {
