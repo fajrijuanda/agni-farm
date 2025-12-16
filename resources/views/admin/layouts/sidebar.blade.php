@@ -46,7 +46,7 @@
                 $unreadContacts = \App\Models\Contact::unread()->count();
             @endphp
 
-            <a href="#" class="nav-item">
+            <a href="{{ route('admin.contacts.index') }}" class="nav-item {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
                 <i data-feather="mail" class="nav-item-icon"></i>
                 Pesan Masuk
                 @if($unreadContacts > 0)

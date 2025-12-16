@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AuthController;
 use App\Http\Controllers\Admin\CatalogController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,4 +51,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('catalog/{product}/duplicate', [CatalogController::class, 'duplicate'])->name('catalog.duplicate');
     Route::delete('catalog/image/{image}', [CatalogController::class, 'deleteImage'])->name('catalog.delete-image');
     Route::post('catalog/image/{image}/primary', [CatalogController::class, 'setPrimaryImage'])->name('catalog.set-primary-image');
+
+    // Contacts
+    Route::get('contacts', [ContactController::class, 'index'])->name('contacts.index');
+    Route::get('contacts/{contact}', [ContactController::class, 'show'])->name('contacts.show');
+    Route::post('contacts/{contact}/toggle-read', [ContactController::class, 'toggleRead'])->name('contacts.toggle-read');
+    Route::post('contacts/mark-all-read', [ContactController::class, 'markAllRead'])->name('contacts.mark-all-read');
+    Route::delete('contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+    Route::post('contacts/bulk-delete', [ContactController::class, 'bulkDelete'])->name('contacts.bulk-delete');
 });
