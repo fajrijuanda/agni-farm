@@ -1,0 +1,439 @@
+/*
+|--------------------------------------------------------------------------
+| Agni Farm - Animations & Micro-interactions
+|--------------------------------------------------------------------------
+*/
+
+/* ========================================
+   SCROLL ANIMATIONS
+======================================== */
+.animate-on-scroll {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.animate-on-scroll.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger children animations */
+.animate-stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.animate-stagger.visible > *:nth-child(1) { transition-delay: 0.1s; }
+.animate-stagger.visible > *:nth-child(2) { transition-delay: 0.2s; }
+.animate-stagger.visible > *:nth-child(3) { transition-delay: 0.3s; }
+.animate-stagger.visible > *:nth-child(4) { transition-delay: 0.4s; }
+.animate-stagger.visible > *:nth-child(5) { transition-delay: 0.5s; }
+.animate-stagger.visible > *:nth-child(6) { transition-delay: 0.6s; }
+.animate-stagger.visible > *:nth-child(7) { transition-delay: 0.7s; }
+.animate-stagger.visible > *:nth-child(8) { transition-delay: 0.8s; }
+
+.animate-stagger.visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Fade animations */
+.fade-in {
+    animation: fadeIn 0.6s ease forwards;
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.fade-in-down {
+    animation: fadeInDown 0.6s ease forwards;
+}
+
+.fade-in-left {
+    animation: fadeInLeft 0.6s ease forwards;
+}
+
+.fade-in-right {
+    animation: fadeInRight 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ========================================
+   HERO ANIMATIONS
+======================================== */
+.hero-badge {
+    animation: fadeInDown 0.8s ease 0.2s backwards;
+}
+
+.hero-title {
+    animation: fadeInUp 0.8s ease 0.4s backwards;
+}
+
+.hero-description {
+    animation: fadeInUp 0.8s ease 0.6s backwards;
+}
+
+.hero-buttons {
+    animation: fadeInUp 0.8s ease 0.8s backwards;
+}
+
+/* Floating animation for decorative elements */
+.float {
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+/* Pulse animation */
+.pulse {
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+/* ========================================
+   BUTTON MICRO-INTERACTIONS
+======================================== */
+.btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* ========================================
+   CARD HOVER EFFECTS
+======================================== */
+.product-card {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-12px) scale(1.02);
+}
+
+.category-card {
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+                box-shadow 0.4s ease,
+                border-color 0.3s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-8px) scale(1.03);
+}
+
+.category-card:hover .category-icon {
+    transform: scale(1.1) rotate(5deg);
+    transition: transform 0.3s ease;
+}
+
+/* ========================================
+   IMAGE HOVER EFFECTS
+======================================== */
+.product-card-image img {
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.product-card:hover .product-card-image img {
+    transform: scale(1.12);
+}
+
+/* Image overlay on hover */
+.product-card-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        transparent 50%,
+        rgba(0, 0, 0, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-card:hover .product-card-image::after {
+    opacity: 1;
+}
+
+/* ========================================
+   LINK HOVER EFFECTS
+======================================== */
+.nav-link {
+    position: relative;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--color-primary-500);
+    border-radius: 2px;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+    left: 0;
+}
+
+/* Footer links */
+.footer-links a {
+    position: relative;
+    display: inline-block;
+}
+
+.footer-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-primary-400);
+    transition: width 0.3s ease;
+}
+
+.footer-links a:hover::after {
+    width: 100%;
+}
+
+/* ========================================
+   FORM FOCUS ANIMATIONS
+======================================== */
+.form-input,
+.form-textarea,
+.form-select {
+    transition: border-color 0.3s ease,
+                box-shadow 0.3s ease,
+                transform 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+    transform: translateY(-2px);
+}
+
+/* Label animation */
+.form-group {
+    position: relative;
+}
+
+/* ========================================
+   LOADING ANIMATIONS
+======================================== */
+.skeleton {
+    background: linear-gradient(
+        90deg,
+        var(--color-gray-100) 25%,
+        var(--color-gray-200) 50%,
+        var(--color-gray-100) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* Spinner */
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--color-gray-200);
+    border-top-color: var(--color-primary-500);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================
+   SCROLL TO TOP BUTTON
+======================================== */
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--color-primary-500);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
+    z-index: 100;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.scroll-to-top:hover {
+    background: var(--color-primary-600);
+    transform: translateY(-4px);
+    box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+}
+
+/* ========================================
+   PAGE TRANSITIONS
+======================================== */
+.page-transition {
+    animation: pageEnter 0.5s ease;
+}
+
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   NOTIFICATION ANIMATIONS
+======================================== */
+.toast-enter {
+    animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.toast-exit {
+    animation: slideOutRight 0.3s ease forwards;
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideOutRight {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+}
+
+/* ========================================
+   REDUCED MOTION
+======================================== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .animate-on-scroll {
+        opacity: 1;
+        transform: none;
+    }
+}

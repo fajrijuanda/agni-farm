@@ -34,7 +34,7 @@
 <!-- About Preview Section -->
 <section class="section-lg" style="background: white;">
     <div class="container">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
+        <div class="animate-on-scroll" style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;">
             <div>
                 <span class="section-badge">Tentang Kami</span>
                 <h2 style="font-size: var(--font-size-3xl); font-weight: 700; color: var(--color-gray-900); margin-bottom: var(--spacing-4);">
@@ -67,7 +67,7 @@
 @if($featuredProducts->count() > 0)
 <section class="section-lg">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header animate-on-scroll">
             <span class="section-badge">Produk Unggulan</span>
             <h2 class="section-title">Produk Pilihan Kami</h2>
             <p class="section-description">
@@ -75,7 +75,7 @@
             </p>
         </div>
 
-        <div class="products-grid">
+        <div class="products-grid animate-stagger">
             @foreach($featuredProducts as $product)
                 <div class="product-card">
                     <div class="product-card-image">
@@ -132,7 +132,7 @@
 @if($categories->count() > 0)
 <section class="section-lg" style="background: white;">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header animate-on-scroll">
             <span class="section-badge">Kategori Produk</span>
             <h2 class="section-title">Temukan Berdasarkan Kategori</h2>
             <p class="section-description">
@@ -140,7 +140,7 @@
             </p>
         </div>
 
-        <div class="categories-grid">
+        <div class="categories-grid animate-stagger">
             @foreach($categories as $category)
                 <a href="{{ route('catalog', ['category' => $category->id]) }}" class="category-card">
                     <div class="category-icon">
@@ -159,7 +159,7 @@
 @if($latestProducts->count() > 0)
 <section class="section-lg">
     <div class="container">
-        <div class="section-header">
+        <div class="section-header animate-on-scroll">
             <span class="section-badge">Produk Terbaru</span>
             <h2 class="section-title">Baru Ditambahkan</h2>
             <p class="section-description">
@@ -167,7 +167,7 @@
             </p>
         </div>
 
-        <div class="products-grid">
+        <div class="products-grid animate-stagger">
             @foreach($latestProducts as $product)
                 <div class="product-card">
                     <div class="product-card-image">
@@ -216,7 +216,7 @@
 <!-- CTA Section -->
 <section class="cta-section">
     <div class="container">
-        <div class="cta-content">
+        <div class="cta-content animate-on-scroll">
             <h2 class="cta-title">Siap Memulai Berkebun?</h2>
             <p class="cta-description">
                 Dapatkan bibit tanaman berkualitas dengan harga terjangkau. Belanja sekarang di Shopee!
