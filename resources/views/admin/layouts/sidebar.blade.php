@@ -23,17 +23,17 @@
         <div class="nav-section">
             <div class="nav-section-title">Catalog</div>
 
-            <a href="{{ route('admin.catalog.index') ?? '#' }}" class="nav-item {{ request()->routeIs('admin.catalog.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.catalog.index') }}" class="nav-item {{ request()->routeIs('admin.catalog.*') ? 'active' : '' }}">
                 <i data-feather="package" class="nav-item-icon"></i>
                 Semua Produk
             </a>
 
-            <a href="{{ route('admin.catalog.create') ?? '#' }}" class="nav-item {{ request()->routeIs('admin.catalog.create') ? 'active' : '' }}">
+            <a href="{{ route('admin.catalog.create') }}" class="nav-item {{ request()->routeIs('admin.catalog.create') ? 'active' : '' }}">
                 <i data-feather="plus-circle" class="nav-item-icon"></i>
                 Tambah Produk
             </a>
 
-            <a href="{{ route('admin.categories.index') ?? '#' }}" class="nav-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.categories.index') }}" class="nav-item {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                 <i data-feather="folder" class="nav-item-icon"></i>
                 Kategori
             </a>
@@ -46,7 +46,7 @@
                 $unreadContacts = \App\Models\Contact::unread()->count();
             @endphp
 
-            <a href="{{ route('admin.contacts.index') ?? '#' }}" class="nav-item {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
+            <a href="#" class="nav-item">
                 <i data-feather="mail" class="nav-item-icon"></i>
                 Pesan Masuk
                 @if($unreadContacts > 0)
@@ -54,7 +54,7 @@
                 @endif
             </a>
 
-            <a href="{{ route('admin.settings.index') ?? '#' }}" class="nav-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
+            <a href="#" class="nav-item">
                 <i data-feather="settings" class="nav-item-icon"></i>
                 Pengaturan
             </a>
