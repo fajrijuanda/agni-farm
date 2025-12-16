@@ -60,6 +60,87 @@
     </div>
 </div>
 
+<!-- Visitor Statistics -->
+<div class="card" style="margin-bottom: 32px;">
+    <div class="card-header">
+        <h3 class="card-title">📊 Statistik Pengunjung</h3>
+    </div>
+    <div class="card-body">
+        <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 32px;">
+            <!-- Chart -->
+            <div>
+                <h4 style="font-size: 14px; color: var(--color-gray-600); margin-bottom: 16px;">Views 7 Hari Terakhir</h4>
+                <div style="display: flex; align-items: flex-end; gap: 8px; height: 150px;">
+                    @php
+                        $maxViews = max(array_column($dailyViews, 'views')) ?: 1;
+                    @endphp
+                    @foreach($dailyViews as $day)
+                        @php
+                            $height = ($day['views'] / $maxViews) * 100;
+                        @endphp
+                        <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+                            <span style="font-size: 11px; color: var(--color-gray-600); margin-bottom: 4px;">{{ $day['views'] }}</span>
+                            <div style="width: 100%; height: {{ max($height, 5) }}%; background: linear-gradient(180deg, var(--color-primary-400) 0%, var(--color-primary-600) 100%); border-radius: 4px 4px 0 0; min-height: 5px;"></div>
+                            <span style="font-size: 10px; color: var(--color-gray-500); margin-top: 8px;">{{ $day['date'] }}</span>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div>
+                <h4 style="font-size: 14px; color: var(--color-gray-600); margin-bottom: 16px;">Ringkasan</h4>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: var(--color-gray-50); border-radius: 8px;">
+                        <span style="color: var(--color-gray-600);">Hari Ini</span>
+                        <span style="font-weight: 600; color: var(--color-primary-600);">{{ number_format($stats['today_views']) }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: var(--color-gray-50); border-radius: 8px;">
+                        <span style="color: var(--color-gray-600);">Minggu Ini</span>
+                        <span style="font-weight: 600; color: var(--color-gray-800);">{{ number_format($stats['week_views']) }}</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding: 12px; background: var(--color-gray-50); border-radius: 8px;">
+                        <span style="color: var(--color-gray-600);">Bulan Ini</span>
+                        <span style="font-weight: 600; color: var(--color-gray-800);">{{ number_format($stats['month_views']) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Per Page Stats -->
+        <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--color-gray-200);">
+            <h4 style="font-size: 14px; color: var(--color-gray-600); margin-bottom: 16px;">Views per Halaman</h4>
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px;">
+                <div style="text-align: center; padding: 16px; background: var(--color-gray-50); border-radius: 8px;">
+                    <i data-feather="home" style="width: 20px; height: 20px; color: var(--color-primary-500); margin-bottom: 8px;"></i>
+                    <p style="font-size: 18px; font-weight: 700; color: var(--color-gray-800); margin: 0;">{{ number_format($stats['home_views']) }}</p>
+                    <span style="font-size: 12px; color: var(--color-gray-500);">Home</span>
+                </div>
+                <div style="text-align: center; padding: 16px; background: var(--color-gray-50); border-radius: 8px;">
+                    <i data-feather="grid" style="width: 20px; height: 20px; color: var(--color-secondary-500); margin-bottom: 8px;"></i>
+                    <p style="font-size: 18px; font-weight: 700; color: var(--color-gray-800); margin: 0;">{{ number_format($stats['catalog_views']) }}</p>
+                    <span style="font-size: 12px; color: var(--color-gray-500);">Catalog</span>
+                </div>
+                <div style="text-align: center; padding: 16px; background: var(--color-gray-50); border-radius: 8px;">
+                    <i data-feather="package" style="width: 20px; height: 20px; color: var(--color-info); margin-bottom: 8px;"></i>
+                    <p style="font-size: 18px; font-weight: 700; color: var(--color-gray-800); margin: 0;">{{ number_format($stats['product_views']) }}</p>
+                    <span style="font-size: 12px; color: var(--color-gray-500);">Produk</span>
+                </div>
+                <div style="text-align: center; padding: 16px; background: var(--color-gray-50); border-radius: 8px;">
+                    <i data-feather="info" style="width: 20px; height: 20px; color: var(--color-warning); margin-bottom: 8px;"></i>
+                    <p style="font-size: 18px; font-weight: 700; color: var(--color-gray-800); margin: 0;">{{ number_format($stats['about_views']) }}</p>
+                    <span style="font-size: 12px; color: var(--color-gray-500);">About</span>
+                </div>
+                <div style="text-align: center; padding: 16px; background: var(--color-gray-50); border-radius: 8px;">
+                    <i data-feather="mail" style="width: 20px; height: 20px; color: var(--color-success); margin-bottom: 8px;"></i>
+                    <p style="font-size: 18px; font-weight: 700; color: var(--color-gray-800); margin: 0;">{{ number_format($stats['contact_views']) }}</p>
+                    <span style="font-size: 12px; color: var(--color-gray-500);">Contact</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Content Grid -->
 <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
     <!-- Recent Products -->

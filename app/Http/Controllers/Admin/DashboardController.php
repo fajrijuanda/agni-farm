@@ -26,7 +26,23 @@ class DashboardController extends Controller
             'month_views' => PageView::getMonthViews(),
             'unread_contacts' => Contact::unread()->count(),
             'total_contacts' => Contact::count(),
+            // Views per page
+            'home_views' => PageView::getViewCount('home'),
+            'catalog_views' => PageView::getViewCount('catalog'),
+            'product_views' => PageView::getViewCount('product'),
+            'about_views' => PageView::getViewCount('about'),
+            'contact_views' => PageView::getViewCount('contact'),
         ];
+
+        // Get daily views for the last 7 days
+        $dailyViews = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = now()->subDays($i);
+            $dailyViews[] = [
+                'date' => $date->format('d M'),
+                'views' => PageView::whereDate('created_at', $date)->count(),
+            ];
+        }
 
         $recentProducts = Product::with('category')
             ->latest()
@@ -45,6 +61,7 @@ class DashboardController extends Controller
 
         return view('admin.dashboard', compact(
             'stats',
+            'dailyViews',
             'recentProducts',
             'popularProducts',
             'recentContacts'
