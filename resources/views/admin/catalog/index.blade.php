@@ -304,6 +304,91 @@
             }
         });
     }
+
+    // Custom Select Logic
+    class CustomSelect {
+        constructor(originalSelect) {
+            this.originalSelect = originalSelect;
+            this.originalSelect.style.display = 'none';
+            this.wrapper = document.createElement('div');
+            this.wrapper.className = 'select-wrapper';
+            this.trigger = document.createElement('div');
+            this.trigger.className = 'select-trigger';
+
+            const arrow = document.createElement('div');
+            arrow.className = 'select-arrow';
+            arrow.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+
+            this.options = document.createElement('div');
+            this.options.className = 'select-options';
+
+            this.wrapper.appendChild(this.trigger);
+            this.wrapper.appendChild(arrow);
+            this.wrapper.appendChild(this.options);
+
+            originalSelect.parentNode.insertBefore(this.wrapper, originalSelect);
+            this.wrapper.appendChild(originalSelect);
+
+            this.initOptions();
+            this.initEvents();
+            this.updateTrigger();
+        }
+
+        initOptions() {
+            this.options.innerHTML = '';
+            Array.from(this.originalSelect.options).forEach(opt => {
+                const optionEl = document.createElement('div');
+                optionEl.className = `select-option ${opt.selected ? 'selected' : ''}`;
+                optionEl.textContent = opt.textContent;
+                optionEl.dataset.value = opt.value;
+
+                optionEl.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    this.originalSelect.value = opt.value;
+                    // Trigger change event manually (important for filters)
+                    const event = new Event('change', { bubbles: true });
+                    this.originalSelect.dispatchEvent(event);
+
+                    this.wrapper.classList.remove('open');
+                    this.updateTrigger();
+
+                    Array.from(this.options.children).forEach(c => c.classList.remove('selected'));
+                    optionEl.classList.add('selected');
+                });
+
+                this.options.appendChild(optionEl);
+            });
+        }
+
+        initEvents() {
+            this.trigger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Close other selects
+                document.querySelectorAll('.select-wrapper').forEach(w => {
+                    if (w !== this.wrapper) w.classList.remove('open');
+                });
+                this.wrapper.classList.toggle('open');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!this.wrapper.contains(e.target)) {
+                    this.wrapper.classList.remove('open');
+                }
+            });
+        }
+
+        updateTrigger() {
+            const selected = this.originalSelect.options[this.originalSelect.selectedIndex];
+            this.trigger.textContent = selected ? selected.textContent.trim() : 'Select...';
+        }
+    }
+
+    // Initialize Custom Selects
+    document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.form-select').forEach(select => {
+            new CustomSelect(select);
+        });
+    });
 </script>
 @endpush
 
