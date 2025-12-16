@@ -32,7 +32,7 @@
             </button>
 
             <div class="dropdown-menu" id="userDropdown" style="display: none; position: absolute; top: 100%; right: 0; margin-top: 8px; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); min-width: 200px; z-index: 100;">
-                <a href="#" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--color-gray-700); text-decoration: none; transition: background 0.15s;">
+                <a href="{{ route('admin.profile.index') }}" style="display: flex; align-items: center; gap: 12px; padding: 12px 16px; color: var(--color-gray-700); text-decoration: none; transition: background 0.15s;">
                     <i data-feather="user" style="width: 18px; height: 18px;"></i>
                     Profil Saya
                 </a>
