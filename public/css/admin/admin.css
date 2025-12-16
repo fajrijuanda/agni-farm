@@ -1233,6 +1233,69 @@ body {
     .header-toggle {
         display: block;
     }
+
+    /* Responsive grids */
+    [style*="grid-template-columns: 2fr 1fr"],
+    [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    .table-actions {
+        flex-wrap: wrap;
+    }
+}
+
+/* Laravel Pagination Links */
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.pagination nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pagination nav > div:first-child {
+    display: none;
+}
+
+.pagination nav > div:last-child span,
+.pagination nav > div:last-child a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    padding: 0 8px;
+    font-size: 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.pagination nav > div:last-child a {
+    background: white;
+    border: 1px solid var(--color-gray-300);
+    color: var(--color-gray-700);
+}
+
+.pagination nav > div:last-child a:hover {
+    background: var(--color-gray-50);
+    border-color: var(--color-gray-400);
+}
+
+.pagination nav > div:last-child span[aria-current="page"] span {
+    background: var(--color-primary-600);
+    border-color: var(--color-primary-600);
+    color: white;
+}
+
+.pagination nav > div:last-child span:not([aria-current]) {
+    color: var(--color-gray-400);
 }
 
 @media (max-width: 640px) {

@@ -194,7 +194,7 @@
 
             <div class="footer-bottom">
                 <p>&copy; {{ date('Y') }} Agni Farm. All rights reserved.</p>
-                <p>Made with ❤️ in Indonesia</p>
+                <p>Made with Love in Indonesia</p>
             </div>
         </div>
     </footer>
