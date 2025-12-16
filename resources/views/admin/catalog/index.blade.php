@@ -226,7 +226,7 @@ function confirmDelete(id, name) {
 
 @push('styles')
 <style>
-    @media (max-width: 768px) {
+    @@media (max-width: 768px) {
         .table-actions {
             flex-wrap: wrap;
         }

@@ -469,7 +469,7 @@ function removeSpec(btn) {
 
 @push('styles')
 <style>
-    @media (max-width: 1024px) {
+    @@media (max-width: 1024px) {
         [style*="grid-template-columns: 2fr 1fr"] {
             grid-template-columns: 1fr !important;
         }
