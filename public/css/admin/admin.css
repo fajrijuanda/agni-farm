@@ -1298,9 +1298,15 @@ body {
     color: var(--color-gray-400);
 }
 
-.pagination nav svg {
-    width: 20px;
-    height: 20px;
+/* Force SVG size for Laravel Pagination */
+.pagination svg,
+.pagination nav svg,
+.pagination nav > div > div svg,
+.w-5.h-5 {
+    width: 20px !important;
+    height: 20px !important;
+    max-width: 20px !important;
+    max-height: 20px !important;
 }
 
 @media (max-width: 640px) {
