@@ -93,8 +93,8 @@
 
                 <!-- Region Selector -->
                 <div class="region-selector" style="position: relative;">
-                    <button type="button" class="btn btn-light btn-sm region-toggle" id="regionToggle" style="padding: 6px 12px; font-size: 13px; display: flex; align-items: center; gap: 6px; background: var(--color-gray-100); border: 1px solid var(--color-gray-200);">
-                        <i data-feather="map-pin" style="width: 14px; height: 14px; color: var(--color-primary-600);"></i>
+                    <button type="button" class="btn btn-light btn-sm region-toggle" id="regionToggle" style="padding: 8px 16px; font-size: 14px; display: flex; align-items: center; gap: 6px; background: var(--color-gray-100); border: 1px solid var(--color-gray-200); border-radius: 8px; height: 38px;">
+                        <i data-feather="map-pin" style="width: 16px; height: 16px; color: var(--color-primary-600);"></i>
                         <span>{{ $currentRegion['name'] }}</span>
                         <i data-feather="chevron-down" style="width: 14px; height: 14px;"></i>
                     </button>
@@ -118,7 +118,7 @@
                     </div>
                 </div>
 
-                <a href="{{ $currentRegion['shopee_link'] }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="padding: 8px 16px; font-size: 14px;">
+                <a href="{{ $currentRegion['shopee_link'] }}" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="padding: 8px 16px; font-size: 14px; height: 38px; display: flex; align-items: center; gap: 6px;">
                     <i data-feather="shopping-bag" style="width: 16px; height: 16px;"></i>
                     Shopee
                 </a>
