@@ -10,7 +10,14 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::published()->latest()->paginate(9);
-        return view('articles.index', compact('articles'));
+
+        // Get popular articles for slider (top 5 by views)
+        $popularArticles = Article::published()
+            ->orderByDesc('views')
+            ->take(5)
+            ->get();
+
+        return view('articles.index', compact('articles', 'popularArticles'));
     }
 
     public function show(Article $article)
@@ -18,6 +25,9 @@ class ArticleController extends Controller
         if (!$article->is_published) {
             abort(404);
         }
+
+        // Increment view count
+        $article->increment('views');
 
         // Get recent articles for sidebar (exclude current article)
         $recentArticles = Article::published()

@@ -32,6 +32,10 @@
                         <i data-feather="user" style="width: 16px; height: 16px;"></i>
                         {{ $article->user->name ?? 'Admin' }}
                     </span>
+                    <span style="display: flex; align-items: center; gap: var(--spacing-2);">
+                        <i data-feather="eye" style="width: 16px; height: 16px;"></i>
+                        {{ number_format($article->views) }} Dilihat
+                    </span>
                 </div>
 
                 @if($article->image)

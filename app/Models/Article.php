@@ -18,6 +18,7 @@ class Article extends Model
         'content',
         'image',
         'youtube_url',
+        'views',
         'is_published',
         'published_at',
         'user_id',

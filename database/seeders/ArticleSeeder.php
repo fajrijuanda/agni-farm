@@ -12,6 +12,8 @@ class ArticleSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Article::factory()->count(10)->create();
+        \App\Models\Article::factory()->count(10)->create([
+            'views' => rand(100, 5000), // Random views for testing popular slider
+        ]);
     }
 }

@@ -1216,3 +1216,53 @@ button {
     border: none;
 }
 
+
+/* ========================================
+   PAGINATION
+======================================== */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-2);
+    margin-top: var(--spacing-8);
+}
+
+.pagination-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--spacing-3);
+    border-radius: var(--radius-lg);
+    background: white;
+    color: var(--color-gray-700);
+    font-weight: 600;
+    font-size: var(--font-size-sm);
+    text-decoration: none;
+    border: 1px solid var(--color-gray-200);
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-sm);
+}
+
+.pagination-btn:hover:not(.disabled):not(.active) {
+    border-color: var(--color-primary-400);
+    color: var(--color-primary-600);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+.pagination-btn.active {
+    background: var(--color-primary-600);
+    color: white;
+    border-color: var(--color-primary-600);
+    box-shadow: var(--shadow-md);
+}
+
+.pagination-btn.disabled {
+    background: var(--color-gray-50);
+    color: var(--color-gray-400);
+    border-color: var(--color-gray-100);
+    cursor: not-allowed;
+    box-shadow: none;
+}
