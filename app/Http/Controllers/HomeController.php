@@ -6,7 +6,10 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Contact;
 use App\Models\PageView;
+use App\Models\User; // Import User
+use App\Notifications\NewContactMessage; // Import Notification
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification; // Import Facade
 
 class HomeController extends Controller
 {
@@ -147,7 +150,15 @@ class HomeController extends Controller
             'message' => 'required|string|max:5000',
         ]);
 
-        Contact::create($validated);
+        $contact = Contact::create($validated);
+
+        // Notify Admins
+        try {
+            $admins = User::where('is_admin', true)->get();
+            Notification::send($admins, new NewContactMessage($contact));
+        } catch (\Exception $e) {
+            // Log error but continue
+        }
 
         return back()->with('success', 'Terima kasih! Pesan Anda telah terkirim. Kami akan segera menghubungi Anda.');
     }
