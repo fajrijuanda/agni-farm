@@ -1129,7 +1129,9 @@ body {
 .pagination {
     display: flex;
     align-items: center;
+    justify-content: center; /* Center the pagination */
     gap: 4px; /* Tight gap for buttons */
+    width: 100%;
 }
 
 .pagination-btn {
