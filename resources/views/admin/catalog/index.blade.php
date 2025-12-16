@@ -14,10 +14,16 @@
         <h1>Catalog Produk</h1>
         <p>Kelola semua produk Anda</p>
     </div>
-    <a href="{{ route('admin.catalog.create') }}" class="btn btn-primary">
-        <i data-feather="plus"></i>
-        Tambah Produk
-    </a>
+    <div style="display: flex; gap: 12px;">
+        <button id="btnBulkDelete" type="button" class="btn btn-danger" style="display: none;" onclick="confirmBulkDelete()">
+            <i data-feather="trash-2"></i>
+            Hapus Terpilih (<span id="selectedCount">0</span>)
+        </button>
+        <a href="{{ route('admin.catalog.create') }}" class="btn btn-primary">
+            <i data-feather="plus"></i>
+            Tambah Produk
+        </a>
+    </div>
 </div>
 
 <!-- Filters -->
@@ -45,10 +51,15 @@
                 </select>
             </div>
             <div style="min-width: 130px;">
-                <select name="featured" class="form-select">
-                    <option value="">Featured</option>
-                    <option value="yes" {{ request('featured') === 'yes' ? 'selected' : '' }}>Ya</option>
-                    <option value="no" {{ request('featured') === 'no' ? 'selected' : '' }}>Tidak</option>
+                </select>
+            </div>
+            <div style="min-width: 100px;">
+                <select name="per_page" class="form-select" onchange="this.form.submit()">
+                    <option value="5" {{ request('per_page') == 5 ? 'selected' : '' }}>5 Items</option>
+                    <option value="10" {{ request('per_page', 10) == 10 ? 'selected' : '' }}>10 Items</option>
+                    <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25 Items</option>
+                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50 Items</option>
+                    <option value="all" {{ request('per_page') == 'all' ? 'selected' : '' }}>Semua</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-secondary">
@@ -70,6 +81,9 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th style="width: 40px; text-align: center;">
+                                <input type="checkbox" id="selectAll" class="custom-checkbox">
+                            </th>
                             <th style="width: 80px;">Foto</th>
                             <th>Produk</th>
                             <th>Kategori</th>
@@ -82,6 +96,9 @@
                     <tbody>
                         @foreach($products as $product)
                         <tr>
+                            <td style="text-align: center;">
+                                <input type="checkbox" name="selected_ids[]" value="{{ $product->id }}" class="custom-checkbox select-row">
+                            </td>
                             <td>
                                 @if($product->primary_image)
                                     <img src="{{ asset('storage/' . $product->primary_image->image_path) }}"
@@ -208,19 +225,90 @@
 
 @push('scripts')
 <script>
-function confirmDelete(id, name) {
-    modal.confirm({
-        title: 'Hapus Produk?',
-        message: `Apakah Anda yakin ingin menghapus produk "${name}"? Semua foto dan data produk akan dihapus permanen.`,
-        type: 'danger',
-        confirmText: 'Hapus',
-        onConfirm: function() {
-            const form = document.getElementById('deleteForm');
-            form.action = `/admin/catalog/${id}`;
-            form.submit();
+    // Bulk Selection Logic
+    const selectAll = document.getElementById('selectAll');
+    const rowCheckboxes = document.querySelectorAll('.select-row');
+    const btnBulkDelete = document.getElementById('btnBulkDelete');
+    const selectedCountSpan = document.getElementById('selectedCount');
+
+    function updateBulkActionState() {
+        const checkedBoxes = document.querySelectorAll('.select-row:checked');
+        const count = checkedBoxes.length;
+
+        selectedCountSpan.textContent = count;
+
+        if (count > 0) {
+            btnBulkDelete.style.display = 'inline-flex';
+        } else {
+            btnBulkDelete.style.display = 'none';
         }
+
+        // Update Select All state
+        const allChecked = rowCheckboxes.length > 0 && checkedBoxes.length === rowCheckboxes.length;
+        selectAll.checked = allChecked;
+    }
+
+    selectAll.addEventListener('change', function() {
+        rowCheckboxes.forEach(cb => {
+            cb.checked = this.checked;
+        });
+        updateBulkActionState();
     });
-}
+
+    rowCheckboxes.forEach(cb => {
+        cb.addEventListener('change', updateBulkActionState);
+    });
+
+    // Bulk Delete
+    function confirmBulkDelete() {
+        const checkedBoxes = document.querySelectorAll('.select-row:checked');
+        const ids = Array.from(checkedBoxes).map(cb => cb.value);
+
+        if (ids.length === 0) return;
+
+        modal.confirm({
+            title: 'Hapus ' + ids.length + ' Produk?',
+            message: `Apakah Anda yakin ingin menghapus ${ids.length} produk yang dipilih? Tindakan ini tidak dapat dibatalkan.`,
+            type: 'danger',
+            confirmText: 'Hapus Semuanya',
+            onConfirm: function() {
+                const form = document.getElementById('bulkDeleteForm');
+                // Clear existing hidden inputs
+                form.innerHTML = '@csrf'; // Reset but keep CSRF
+
+                // Add IDs
+                ids.forEach(id => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'ids[]';
+                    input.value = id;
+                    form.appendChild(input);
+                });
+
+                form.submit();
+            }
+        });
+    }
+
+    // Individual Delete
+    function confirmDelete(id, name) {
+        modal.confirm({
+            title: 'Hapus Produk?',
+            message: `Apakah Anda yakin ingin menghapus produk "${name}"? Semua foto dan data produk akan dihapus permanen.`,
+            type: 'danger',
+            confirmText: 'Hapus',
+            onConfirm: function() {
+                const form = document.getElementById('deleteForm');
+                form.action = `/admin/catalog/${id}`;
+                form.submit();
+            }
+        });
+    }
 </script>
 @endpush
+
+<!-- Hidden form for bulk delete -->
+<form id="bulkDeleteForm" action="{{ route('admin.catalog.bulk-delete') }}" method="POST" style="display: none;">
+    @csrf
+</form>
 

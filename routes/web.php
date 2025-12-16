@@ -49,6 +49,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('categories/update-order', [CategoryController::class, 'updateOrder'])->name('categories.update-order');
 
     // Catalog (Products)
+    Route::post('catalog/bulk-delete', [CatalogController::class, 'bulkDelete'])->name('catalog.bulk-delete');
     Route::resource('catalog', CatalogController::class);
     Route::post('catalog/{product}/toggle-status', [CatalogController::class, 'toggleStatus'])->name('catalog.toggle-status');
     Route::post('catalog/{product}/toggle-featured', [CatalogController::class, 'toggleFeatured'])->name('catalog.toggle-featured');

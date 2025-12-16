@@ -41,14 +41,48 @@ class CatalogController extends Controller
             $query->where('is_featured', $request->featured === 'yes');
         }
 
+        $perPage = $request->input('per_page', 10);
+        if ($perPage === 'all') {
+            $perPage = $query->count();
+            if ($perPage == 0) $perPage = 10; // Fallback
+        }
+
         $products = $query->ordered()
             ->latest()
-            ->paginate(10)
+            ->paginate($perPage)
             ->withQueryString();
 
         $categories = Category::active()->ordered()->get();
 
         return view('admin.catalog.index', compact('products', 'categories'));
+    }
+
+    /**
+     * Bulk delete products
+     */
+    public function bulkDelete(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:products,id',
+        ]);
+
+        $count = 0;
+        foreach ($request->ids as $id) {
+            $product = Product::find($id);
+            if ($product) {
+                // Delete images
+                foreach ($product->images as $image) {
+                    Storage::disk('public')->delete($image->image_path);
+                }
+                Storage::disk('public')->deleteDirectory('products/' . $product->id);
+                $product->delete();
+                $count++;
+            }
+        }
+
+        return redirect()->route('admin.catalog.index')
+            ->with('success', "{$count} produk berhasil dihapus!");
     }
 
     /**
