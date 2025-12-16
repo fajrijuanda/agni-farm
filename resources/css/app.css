@@ -340,12 +340,42 @@ button {
     flex-wrap: wrap;
 }
 
+/* Hero Grid Layout */
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+@media (min-width: 992px) {
+    .hero-grid {
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: var(--spacing-12);
+    }
+}
+
+.hero-content {
+    max-width: 100%; /* Reset max-width as grid handles it */
+}
+
+.hero-image-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
 .hero-image {
-    position: absolute;
-    right: 5%;
-    bottom: 0;
-    max-width: 45%;
-    z-index: 0;
+    width: 100%;
+    max-width: 550px;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 40px rgba(0,0,0,0.2));
+    border-radius: 30px;
+    /* Animation class handled separately */
 }
 
 /* ========================================

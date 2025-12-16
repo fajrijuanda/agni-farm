@@ -37,6 +37,7 @@ class ProductSeeder extends Seeder
                 'price' => 75000,
                 'discount_price' => 65000,
                 'is_featured' => true,
+                'image' => 'mangga-harum-manis.png',
                 'specs' => [
                     'Tinggi Bibit' => '40-60 cm',
                     'Umur Bibit' => '6-8 bulan',
@@ -52,6 +53,7 @@ class ProductSeeder extends Seeder
                 'price' => 250000,
                 'discount_price' => null,
                 'is_featured' => true,
+                'image' => 'durian-musang-king.png',
                 'specs' => [
                     'Tinggi Bibit' => '50-70 cm',
                     'Umur Bibit' => '8-12 bulan',
@@ -67,6 +69,7 @@ class ProductSeeder extends Seeder
                 'price' => 85000,
                 'discount_price' => 70000,
                 'is_featured' => true,
+                'image' => 'jeruk-santang-madu.png',
                 'specs' => [
                     'Tinggi Bibit' => '30-50 cm',
                     'Umur Bibit' => '6 bulan',
@@ -82,6 +85,7 @@ class ProductSeeder extends Seeder
                 'price' => 95000,
                 'discount_price' => null,
                 'is_featured' => false,
+                'image' => 'alpukat-mentega.png',
                 'specs' => [
                     'Tinggi Bibit' => '40-60 cm',
                     'Umur Bibit' => '8 bulan',
@@ -99,6 +103,7 @@ class ProductSeeder extends Seeder
                 'price' => 15000,
                 'discount_price' => 12000,
                 'is_featured' => true,
+                'image' => 'cabai-rawit-domba.png',
                 'specs' => [
                     'Isi' => '50 biji',
                     'Daya Tumbuh' => '85%',
@@ -114,6 +119,7 @@ class ProductSeeder extends Seeder
                 'price' => 20000,
                 'discount_price' => null,
                 'is_featured' => false,
+                'image' => 'tomat-cherry.png',
                 'specs' => [
                     'Isi' => '30 biji',
                     'Daya Tumbuh' => '90%',
@@ -131,6 +137,7 @@ class ProductSeeder extends Seeder
                 'price' => 150000,
                 'discount_price' => 125000,
                 'is_featured' => true,
+                'image' => 'aglonema-red-sumatra.png',
                 'specs' => [
                     'Ukuran Pot' => '12 cm',
                     'Tinggi Tanaman' => '20-30 cm',
@@ -146,6 +153,7 @@ class ProductSeeder extends Seeder
                 'price' => 175000,
                 'discount_price' => null,
                 'is_featured' => true,
+                'image' => 'monstera-deliciosa.png',
                 'specs' => [
                     'Ukuran Pot' => '15 cm',
                     'Tinggi Tanaman' => '30-40 cm',
@@ -163,6 +171,7 @@ class ProductSeeder extends Seeder
                 'price' => 25000,
                 'discount_price' => 20000,
                 'is_featured' => false,
+                'image' => 'jahe-merah.png',
                 'specs' => [
                     'Isi' => '5 rimpang',
                     'Berat' => '250 gram',
@@ -178,6 +187,7 @@ class ProductSeeder extends Seeder
                 'price' => 35000,
                 'discount_price' => null,
                 'is_featured' => false,
+                'image' => 'rosemary.png',
                 'specs' => [
                     'Ukuran Pot' => '10 cm',
                     'Tinggi' => '15-20 cm',
@@ -195,6 +205,7 @@ class ProductSeeder extends Seeder
                 'price' => 45000,
                 'discount_price' => 38000,
                 'is_featured' => true,
+                'image' => 'echeveria-lola.png',
                 'specs' => [
                     'Diameter' => '8-10 cm',
                     'Warna' => 'Ungu Keabu-abuan',
@@ -210,6 +221,7 @@ class ProductSeeder extends Seeder
                 'price' => 55000,
                 'discount_price' => null,
                 'is_featured' => false,
+                'image' => 'kaktus-moon.png',
                 'specs' => [
                     'Tinggi' => '10-15 cm',
                     'Warna Kepala' => 'Random',
@@ -225,7 +237,9 @@ class ProductSeeder extends Seeder
             if (!$category) continue;
 
             $specs = $productData['specs'] ?? [];
-            unset($productData['category'], $productData['specs']);
+            $imageFile = $productData['image'] ?? null;
+
+            unset($productData['category'], $productData['specs'], $productData['image']);
 
             $product = Product::updateOrCreate(
                 ['slug' => Str::slug($productData['name'])],
@@ -244,6 +258,20 @@ class ProductSeeder extends Seeder
                 ProductSpecification::updateOrCreate(
                     ['product_id' => $product->id, 'key' => $key],
                     ['value' => $value, 'sort_order' => 0]
+                );
+            }
+
+            // Add Image
+            if ($imageFile) {
+                ProductImage::firstOrCreate(
+                    [
+                        'product_id' => $product->id,
+                        'image_path' => 'products/' . $imageFile
+                    ],
+                    [
+                        'is_primary' => true,
+                        'sort_order' => 0,
+                    ]
                 );
             }
         }

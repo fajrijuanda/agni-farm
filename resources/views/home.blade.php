@@ -5,7 +5,7 @@
 @section('content')
 <!-- Hero Section -->
 <section class="hero">
-    <div class="container">
+    <div class="container hero-grid">
         <div class="hero-content">
             <div class="hero-badge">
                 🌿 Supplier Bibit Tanaman Berkualitas
@@ -27,6 +27,11 @@
                     Kunjungi Shopee
                 </a>
             </div>
+        </div>
+        <div class="hero-image-wrapper animate-on-scroll">
+            <img src="{{ asset('images/hero-illustration.png') }}"
+                 alt="Agni Farm Plants"
+                 class="hero-image float">
         </div>
     </div>
 </section>
