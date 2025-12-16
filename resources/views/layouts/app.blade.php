@@ -39,24 +39,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/feather-icons" defer></script>
 
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
 
     <script type="application/ld+json">
     {
-        "@context": "https://schema.org",
-        "@type": "Organization",
+        "@@context": "https://schema.org",
+        "@@type": "Organization",
         "name": "Agni Farm",
         "url": "{{ url('/') }}",
         "logo": "{{ asset('images/logo.png') }}",
         "description": "Supplier bibit tanaman berkualitas dari Jawa Barat",
         "address": {
-            "@type": "PostalAddress",
+            "@@type": "PostalAddress",
             "addressLocality": "Jawa Barat",
             "addressCountry": "ID"
         },
         "contactPoint": {
-            "@type": "ContactPoint",
+            "@@type": "ContactPoint",
             "telephone": "+62-812-3456-7890",
             "contactType": "customer service"
         },
