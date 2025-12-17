@@ -2,6 +2,10 @@
 
 @section('title', 'Kelola Artikel')
 
+@section('breadcrumb')
+    <span style="color: #374151; font-weight: 500;">Artikel</span>
+@endsection
+
 @section('content')
 <div class="page-header">
     <div class="page-header-content">

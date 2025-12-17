@@ -108,14 +108,12 @@
             </div>
 
             <!-- Content Builder Area -->
-            <div class="editor-card" style="min-height: 400px; display: flex; flex-direction: column;">
+            <div class="editor-card content-editor-card">
                 <label class="editor-label">Konten Artikel</label>
-                <div id="blocksContainer" class="blocks-container">
-                    <!-- Blocks will be inserted here -->
-                </div>
-                <div id="dropZone" class="drop-zone" style="flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <div id="blocksContainer"></div>
+                <div id="dropZone" class="drop-zone">
                     <i data-feather="plus-circle" style="width: 48px; height: 48px; color: #d1d5db;"></i>
-                    <p style="margin-top: 16px;">Drag blok dari panel kiri ke sini<br><small>atau klik blok untuk menambahkan</small></p>
+                    <p>Drag blok dari panel kiri ke sini<br><small>atau klik blok untuk menambahkan</small></p>
                 </div>
             </div>
         </div>
@@ -395,8 +393,12 @@
         border-color: #16a34a;
     }
 
-    .blocks-container {
-        min-height: 100px;
+    .content-editor-card {
+        min-height: 350px;
+    }
+
+    .content-editor-card #blocksContainer:empty + .drop-zone {
+        min-height: 280px;
     }
 
     .drop-zone {
@@ -406,6 +408,10 @@
         text-align: center;
         color: #9ca3af;
         transition: all 0.2s;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 
     .drop-zone.drag-over {
