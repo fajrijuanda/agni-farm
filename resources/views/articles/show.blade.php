@@ -11,11 +11,9 @@
                 <!-- Breadcrumb -->
                 <nav style="margin-bottom: var(--spacing-6);">
                     <div style="display: flex; gap: var(--spacing-2); font-size: var(--font-size-sm); color: var(--color-gray-500);">
-                        <a href="{{ route('home') }}" style="color: var(--color-primary-600); text-decoration: none;">Beranda</a>
-                        <span>/</span>
                         <a href="{{ route('articles.index') }}" style="color: var(--color-primary-600); text-decoration: none;">Artikel</a>
-                        <span>/</span>
-                        <span>{{ Str::limit($article->title, 30) }}</span>
+                        <span>›</span>
+                        <span>{{ Str::limit($article->title, 40) }}</span>
                     </div>
                 </nav>
 
