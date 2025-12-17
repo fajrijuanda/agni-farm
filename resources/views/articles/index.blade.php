@@ -310,13 +310,12 @@
                             {{ number_format($article->views) }}
                         </span>
                     </div>
-                        @if($article->youtube_url)
-                        <span style="display: flex; align-items: center; gap: 4px; color: #ff0000; font-size: var(--font-size-xs); font-weight: 600;">
-                            <i data-feather="play-circle" style="width: 14px; height: 14px;"></i>
-                            Video
-                        </span>
-                        @endif
-                    </div>
+                    @if($article->youtube_url)
+                    <span style="display: inline-flex; align-items: center; gap: 4px; color: #ff0000; font-size: var(--font-size-xs); font-weight: 600; margin-bottom: 8px;">
+                        <i data-feather="play-circle" style="width: 14px; height: 14px;"></i>
+                        Video
+                    </span>
+                    @endif
                     <h3 class="article-card-title">
                         <a href="{{ route('articles.show', $article) }}">{{ Str::limit($article->title, 60) }}</a>
                     </h3>
@@ -368,13 +367,12 @@
                 Kunjungi toko Shopee kami dan temukan berbagai bibit tanaman dengan harga terjangkau
             </p>
             @php
-                $selectedRegion = session('selected_region', config('regions.default'));
-                $regions = config('regions.regions');
-                $currentRegion = $regions[$selectedRegion] ?? $regions['karawang'];
+                $selectedRegionSlug = session('selected_region', 'karawang');
+                $ctaRegion = \App\Models\Region::where('slug', $selectedRegionSlug)->first();
             @endphp
-            <a href="{{ $currentRegion['shopee_link'] }}" target="_blank" class="btn btn-lg" style="background: white; color: var(--color-primary-700); font-weight: 600;">
+            <a href="{{ $ctaRegion->shopee_url ?? '#' }}" target="_blank" class="btn btn-lg" style="background: white; color: var(--color-primary-700); font-weight: 600;">
                 <i data-feather="shopping-bag" style="width: 20px; height: 20px;"></i>
-                Kunjungi Shopee {{ $currentRegion['name'] }}
+                Kunjungi Shopee {{ $ctaRegion->name ?? 'Agni Farm' }}
             </a>
         </div>
     </div>

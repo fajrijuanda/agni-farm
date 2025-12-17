@@ -54,12 +54,12 @@ class Article extends Model
     /**
      * Get URL for the article image
      */
-    public function getImageUrlAttribute(): string
+    public function getImageUrlAttribute(): ?string
     {
         if ($this->image) {
             return asset('storage/articles/' . $this->image);
         }
-        return asset('images/placeholder-article.jpg'); // Callback to placeholder
+        return null; // Return null so views can show placeholder
     }
 
     /**

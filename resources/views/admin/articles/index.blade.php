@@ -52,7 +52,13 @@
                         <td>
                             <div class="d-flex align-items-center gap-3">
                                 <div style="width: 60px; height: 60px; border-radius: 8px; overflow: hidden; flex-shrink: 0;">
-                                    <img src="{{ $article->image_url }}" alt="{{ $article->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @if($article->image_url)
+                                        <img src="{{ $article->image_url }}" alt="{{ $article->title }}" style="width: 100%; height: 100%; object-fit: cover;">
+                                    @else
+                                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, #f0f9ff, #dcfce7); display: flex; align-items: center; justify-content: center;">
+                                            <i data-feather="file-text" style="width: 24px; height: 24px; color: #15803d;"></i>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div>
                                     <h6 class="mb-1" style="font-weight: 600;">{{ Str::limit($article->title, 50) }}</h6>

@@ -140,21 +140,21 @@
         <div style="margin-top: 20px; padding: 16px; background: var(--color-gray-50); border-radius: 12px;">
             <p style="font-size: 12px; font-weight: 600; color: var(--color-gray-600); margin-bottom: 8px; text-transform: uppercase;">Lokasi Anda</p>
             <div style="display: flex; flex-wrap: wrap; gap: 8px;">
-                @foreach($regions as $key => $region)
+                @foreach($regions as $region)
                 <form action="{{ route('set.region') }}" method="POST" style="margin: 0;">
                     @csrf
-                    <input type="hidden" name="region" value="{{ $key }}">
-                    <button type="submit" style="padding: 8px 12px; border: 1px solid {{ $selectedRegion === $key ? 'var(--color-primary-500)' : 'var(--color-gray-200)' }}; background: {{ $selectedRegion === $key ? 'var(--color-primary-50)' : 'white' }}; color: {{ $selectedRegion === $key ? 'var(--color-primary-700)' : 'var(--color-gray-600)' }}; font-weight: 500; font-size: 13px; border-radius: 8px; cursor: pointer;">
-                        {{ $region['icon'] }} {{ $region['name'] }}
+                    <input type="hidden" name="region" value="{{ $region->slug }}">
+                    <button type="submit" style="padding: 8px 12px; border: 1px solid {{ $selectedRegionSlug === $region->slug ? 'var(--color-primary-500)' : 'var(--color-gray-200)' }}; background: {{ $selectedRegionSlug === $region->slug ? 'var(--color-primary-50)' : 'white' }}; color: {{ $selectedRegionSlug === $region->slug ? 'var(--color-primary-700)' : 'var(--color-gray-600)' }}; font-weight: 500; font-size: 13px; border-radius: 8px; cursor: pointer;">
+                        📍 {{ $region->name }}
                     </button>
                 </form>
                 @endforeach
             </div>
         </div>
 
-        <a href="{{ $currentRegion['shopee_link'] }}" target="_blank" rel="noopener" class="btn btn-shopee" style="margin-top: 16px; width: 100%;">
+        <a href="{{ $currentRegion->shopee_url ?? '#' }}" target="_blank" rel="noopener" class="btn btn-shopee" style="margin-top: 16px; width: 100%;">
             <i data-feather="shopping-bag"></i>
-            Kunjungi Shopee {{ $currentRegion['name'] }}
+            Kunjungi Shopee {{ $currentRegion->name ?? 'Agni Farm' }}
         </a>
     </div>
 

@@ -38,9 +38,13 @@
                     </span>
                 </div>
 
-                @if($article->image)
+                @if($article->image_url)
                 <div style="border-radius: var(--radius-xl); overflow: hidden; margin-bottom: var(--spacing-8); box-shadow: var(--shadow-lg);">
                     <img src="{{ $article->image_url }}" alt="{{ $article->title }}" style="width: 100%; height: auto;">
+                </div>
+                @else
+                <div style="border-radius: var(--radius-xl); overflow: hidden; margin-bottom: var(--spacing-8); box-shadow: var(--shadow-lg); background: linear-gradient(135deg, var(--color-primary-100), var(--color-primary-200)); height: 300px; display: flex; align-items: center; justify-content: center;">
+                    <i data-feather="image" style="width: 64px; height: 64px; color: var(--color-primary-400);"></i>
                 </div>
                 @endif
 
@@ -94,7 +98,13 @@
                     <div class="recent-article-item">
                         <div class="recent-article-thumb">
                             <a href="{{ route('articles.show', $recent) }}">
-                                <img src="{{ $recent->image_url }}" alt="{{ $recent->title }}">
+                                @if($recent->image_url)
+                                    <img src="{{ $recent->image_url }}" alt="{{ $recent->title }}">
+                                @else
+                                    <div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-primary-100), var(--color-primary-200)); display: flex; align-items: center; justify-content: center;">
+                                        <i data-feather="file-text" style="width: 24px; height: 24px; color: var(--color-primary-400);"></i>
+                                    </div>
+                                @endif
                             </a>
                         </div>
                         <div class="recent-article-info">
@@ -108,10 +118,14 @@
                 </div>
 
                 <!-- CTA Widget -->
+                @php
+                    $selectedRegionSlug = session('selected_region', 'karawang');
+                    $sidebarRegion = \App\Models\Region::where('slug', $selectedRegionSlug)->first();
+                @endphp
                 <div class="sidebar-widget" style="background: linear-gradient(135deg, var(--color-primary-600), var(--color-primary-700)); color: white;">
                     <h3 style="font-size: var(--font-size-lg); font-weight: 700; margin-bottom: var(--spacing-3);">🌱 Kunjungi Toko Kami</h3>
                     <p style="font-size: var(--font-size-sm); opacity: 0.9; margin-bottom: var(--spacing-4);">Dapatkan bibit tanaman berkualitas dengan harga terjangkau!</p>
-                    <a href="https://shopee.co.id/agnifarm" target="_blank" class="btn" style="background: white; color: var(--color-primary-700); width: 100%;">
+                    <a href="{{ $sidebarRegion->shopee_url ?? '#' }}" target="_blank" class="btn" style="background: white; color: var(--color-primary-700); width: 100%;">
                         <i data-feather="shopping-bag" style="width: 16px; height: 16px;"></i>
                         Beli di Shopee
                     </a>
