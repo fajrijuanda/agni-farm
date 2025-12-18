@@ -301,8 +301,162 @@
             }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
             animateElements.forEach(el => observer.observe(el));
+
+            // Custom Select Component
+            function initCustomSelects() {
+                document.querySelectorAll('select.form-select').forEach(select => {
+                    if (select.dataset.customized) return;
+                    select.dataset.customized = 'true';
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'custom-select-wrapper';
+                    select.parentNode.insertBefore(wrapper, select);
+
+                    const customSelect = document.createElement('div');
+                    customSelect.className = 'custom-select';
+
+                    const trigger = document.createElement('div');
+                    trigger.className = 'custom-select-trigger';
+                    const selectedOption = select.options[select.selectedIndex];
+                    trigger.innerHTML = `<span>${selectedOption ? selectedOption.text : ''}</span><i data-feather="chevron-down"></i>`;
+
+                    const options = document.createElement('div');
+                    options.className = 'custom-select-options';
+
+                    Array.from(select.options).forEach((option, index) => {
+                        const optionEl = document.createElement('div');
+                        optionEl.className = 'custom-select-option' + (index === select.selectedIndex ? ' selected' : '');
+                        optionEl.dataset.value = option.value;
+                        optionEl.textContent = option.text;
+                        optionEl.addEventListener('click', () => {
+                            select.value = option.value;
+                            select.dispatchEvent(new Event('change'));
+                            trigger.querySelector('span').textContent = option.text;
+                            options.querySelectorAll('.custom-select-option').forEach(o => o.classList.remove('selected'));
+                            optionEl.classList.add('selected');
+                            customSelect.classList.remove('open');
+                        });
+                        options.appendChild(optionEl);
+                    });
+
+                    customSelect.appendChild(trigger);
+                    customSelect.appendChild(options);
+                    wrapper.appendChild(customSelect);
+                    wrapper.appendChild(select);
+                    select.style.display = 'none';
+
+                    trigger.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        document.querySelectorAll('.custom-select.open').forEach(s => {
+                            if (s !== customSelect) s.classList.remove('open');
+                        });
+                        customSelect.classList.toggle('open');
+                    });
+
+                    if (typeof feather !== 'undefined') feather.replace();
+                });
+
+                document.addEventListener('click', () => {
+                    document.querySelectorAll('.custom-select.open').forEach(s => s.classList.remove('open'));
+                });
+            }
+
+            initCustomSelects();
         });
     </script>
+
+    <style>
+    .custom-select-wrapper {
+        position: relative;
+    }
+    .custom-select {
+        position: relative;
+    }
+    .custom-select-trigger {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        background: white;
+        border: 2px solid #e5e7eb;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 15px;
+        color: #374151;
+        transition: all 0.15s ease;
+    }
+    .custom-select-trigger:hover {
+        border-color: #d1d5db;
+    }
+    .custom-select.open .custom-select-trigger {
+        border-color: #16a34a;
+        box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.1);
+    }
+    .custom-select-trigger svg {
+        width: 18px;
+        height: 18px;
+        color: #9ca3af;
+        transition: transform 0.2s ease;
+    }
+    .custom-select.open .custom-select-trigger svg {
+        transform: rotate(180deg);
+        color: #16a34a;
+    }
+    .custom-select-options {
+        position: absolute;
+        top: calc(100% + 6px);
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        max-height: 220px;
+        overflow-y: auto;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-8px);
+        transition: all 0.2s ease;
+        z-index: 100;
+    }
+    .custom-select.open .custom-select-options {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+    }
+    .custom-select-option {
+        padding: 12px 16px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #4b5563;
+        transition: all 0.15s ease;
+    }
+    .custom-select-option:first-child {
+        border-radius: 12px 12px 0 0;
+    }
+    .custom-select-option:last-child {
+        border-radius: 0 0 12px 12px;
+    }
+    .custom-select-option:hover {
+        background: #f0fdf4;
+        color: #166534;
+    }
+    .custom-select-option.selected {
+        background: #dcfce7;
+        color: #166534;
+        font-weight: 500;
+    }
+    .custom-select-options::-webkit-scrollbar {
+        width: 6px;
+    }
+    .custom-select-options::-webkit-scrollbar-track {
+        background: transparent;
+    }
+    .custom-select-options::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 3px;
+    }
+    </style>
 
     @stack('scripts')
 </body>
