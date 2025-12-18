@@ -392,7 +392,8 @@ button {
     padding: var(--spacing-3) var(--spacing-6);
     font-size: var(--font-size-base);
     font-weight: 600;
-    border: none;
+    font-weight: 600;
+    border: 2px solid transparent;
     border-radius: var(--radius-lg);
     transition: all var(--transition-fast);
     text-decoration: none;
