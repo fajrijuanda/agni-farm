@@ -69,6 +69,54 @@
     @stack('styles')
 </head>
 <body class="page-transition">
+    <!-- Splash Screen -->
+    <div id="splash-screen" style="position: fixed; inset: 0; background: linear-gradient(135deg, #166534 0%, #14532d 100%); z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease-out;">
+        <div style="text-align: center;">
+            <div class="splash-logo" style="font-size: 64px; margin-bottom: 20px; animation: pulse 2s infinite;">🌱</div>
+            <h1 style="color: white; font-size: 32px; font-weight: 800; opacity: 0; animation: fadeUp 0.8s ease-out forwards 0.3s;">Agni Farm</h1>
+            <p style="color: rgba(255,255,255,0.8); margin-top: 10px; opacity: 0; animation: fadeUp 0.8s ease-out forwards 0.6s;">Bibit Tanaman Berkualitas</p>
+        </div>
+    </div>
+
+    <!-- Page Loader -->
+    <div id="page-loader" style="position: fixed; top: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.2); z-index: 10000; display: none;">
+        <div class="loader-bar" style="height: 100%; background: #22c55e; width: 0%; transition: width 0.2s ease;"></div>
+    </div>
+
+    <script>
+        // Splash Screen Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const splash = document.getElementById('splash-screen');
+
+            // Check if splash has been shown in this session
+            if (!sessionStorage.getItem('splashShown')) {
+                setTimeout(() => {
+                    splash.style.opacity = '0';
+                    setTimeout(() => {
+                        splash.style.display = 'none';
+                        sessionStorage.setItem('splashShown', 'true');
+                    }, 500);
+                }, 2000); // Show for 2 seconds
+            } else {
+                splash.style.display = 'none';
+            }
+        });
+
+        // Page Loader Logic
+        window.addEventListener('beforeunload', function() {
+            const loader = document.getElementById('page-loader');
+            const bar = loader.querySelector('.loader-bar');
+            loader.style.display = 'block';
+
+            // Simulate progress
+            let width = 0;
+            const interval = setInterval(() => {
+                if (width >= 90) clearInterval(interval);
+                width += Math.random() * 10;
+                bar.style.width = width + '%';
+            }, 100);
+        });
+    </script>
     <header class="header" id="header">
         <div class="container header-container">
             <a href="{{ route('home') }}" class="header-logo">
