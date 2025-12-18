@@ -286,48 +286,7 @@
         @if($articles->count() > 0)
         <div class="articles-grid">
             @foreach($articles as $article)
-            <article class="article-card">
-                <a href="{{ route('articles.show', $article) }}" class="article-card-image">
-                    @if($article->image)
-                        <img src="{{ $article->image_url }}" alt="{{ $article->title }}">
-                    @else
-                        <div style="width: 100%; height: 100%; background: linear-gradient(135deg, var(--color-primary-100), var(--color-primary-200)); display: flex; align-items: center; justify-content: center;">
-                            <i data-feather="file-text" style="width: 48px; height: 48px; color: var(--color-primary-400);"></i>
-                        </div>
-                    @endif
-                    <div class="article-card-overlay">
-                        <span class="article-read-more">Baca Artikel</span>
-                    </div>
-                </a>
-                <div class="article-card-body">
-                    <div class="article-meta" style="justify-content: space-between;">
-                        <span class="article-date">
-                            <i data-feather="calendar" style="width: 14px; height: 14px;"></i>
-                            {{ $article->published_at ? $article->published_at->format('d M Y') : $article->created_at->format('d M Y') }}
-                        </span>
-                        <span style="font-size: var(--font-size-xs); color: var(--color-gray-500); display: flex; align-items: center; gap: 4px;">
-                            <i data-feather="eye" style="width: 14px; height: 14px;"></i>
-                            {{ number_format($article->views) }}
-                        </span>
-                    </div>
-                    @if($article->youtube_url)
-                    <span style="display: inline-flex; align-items: center; gap: 4px; color: #ff0000; font-size: var(--font-size-xs); font-weight: 600; margin-bottom: 8px;">
-                        <i data-feather="play-circle" style="width: 14px; height: 14px;"></i>
-                        Video
-                    </span>
-                    @endif
-                    <h3 class="article-card-title">
-                        <a href="{{ route('articles.show', $article) }}">{{ Str::limit($article->title, 60) }}</a>
-                    </h3>
-                    <p class="article-card-excerpt">
-                        {{ Str::limit($article->excerpt ?? strip_tags($article->content), 120) }}
-                    </p>
-                    <a href="{{ route('articles.show', $article) }}" class="article-link">
-                        Baca Selengkapnya
-                        <i data-feather="arrow-right" style="width: 16px; height: 16px;"></i>
-                    </a>
-                </div>
-            </article>
+            <x-article-card :article="$article" />
             @endforeach
         </div>
 

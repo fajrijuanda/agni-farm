@@ -15,7 +15,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::with('user')->latest()->paginate(10);
+        $query = Article::with('user')->latest();
+
+        if (!auth()->user()->isSuperAdmin()) {
+            $query->where('user_id', auth()->id());
+        }
+
+        $articles = $query->paginate(10);
         return view('admin.articles.index', compact('articles'));
     }
 
