@@ -389,11 +389,10 @@ button {
     align-items: center;
     justify-content: center;
     gap: var(--spacing-2);
-    padding: var(--spacing-3) var(--spacing-6);
+    padding: calc(var(--spacing-3) + 2px) var(--spacing-6);
     font-size: var(--font-size-base);
     font-weight: 600;
-    font-weight: 600;
-    border: 2px solid transparent;
+    border: none;
     border-radius: var(--radius-lg);
     transition: all var(--transition-fast);
     text-decoration: none;
@@ -429,6 +428,7 @@ button {
 .btn-outline {
     background: transparent;
     color: white;
+    padding: var(--spacing-3) var(--spacing-6);
     border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
@@ -457,6 +457,20 @@ button {
 .btn-whatsapp:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.btn-light {
+    background: var(--color-gray-50);
+    color: var(--color-gray-700);
+    border: 1px solid var(--color-gray-200);
+    /* Thin border for light button */
+    padding: var(--spacing-3) var(--spacing-6);
+    /* Adjust padding since we have border */
+}
+
+.btn-light:hover {
+    background: var(--color-gray-100);
+    color: var(--color-gray-900);
 }
 
 /* ========================================
